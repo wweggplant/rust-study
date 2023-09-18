@@ -1,5 +1,6 @@
 use crate::tokenizer::{tokenizer, Token};
 use crate::parser::{ Parser, Ast};
+use crate::transformer::{ Transformer };
 
 /* 
   编译器
@@ -10,9 +11,10 @@ use crate::parser::{ Parser, Ast};
   5. Optimization
   return js code
 */
-pub fn compiler (input: &str) -> Ast {
+pub fn compiler (input: &str) -> String {
   let tokens: Vec<Token> = tokenizer(input);
   let mut parser = Parser::new(tokens);
   let ast = parser.parse();
-  ast
+  let code = Transformer::transform(ast);
+  code
 }
